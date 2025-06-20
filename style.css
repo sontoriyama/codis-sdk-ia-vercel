@@ -1,0 +1,223 @@
+/* General Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Hamburger Menu Styles */
+.burger {
+    display: none; /* Hidden by default */
+    cursor: pointer;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Section Styles */
+.section {
+    position: relative; /* Ensure sections stack correctly */
+    height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.section:nth-child(even) {
+    background-color: #f0f0f0;
+}
+
+.content {
+    position: relative; /* Establish stacking context for children */
+    z-index: 1; /* Ensure content is above section background but respects header */
+    max-width: 800px;
+    margin: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+}
+
+/* Code Block Styling */
+pre {
+    position: relative; /* Ensure proper stacking context */
+    z-index: 1; /* Or auto, to ensure it's above static content but below headers if needed */
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 5px;
+}
+
+/* Styling for README containers */
+#dalle-readme,
+#flux-readme,
+#gemini-readme,
+#translator-readme {
+    position: static;
+    z-index: auto;
+    width: 100%; /* Occupy the width of the .content container */
+    max-width: 100%; /* Ensure it doesn't exceed .content */
+    max-height: 50vh; /* Limit height to 50% of viewport height */
+    overflow-y: auto; /* Allow vertical scroll if content is taller */
+    overflow-x: hidden; /* Prevent horizontal scroll on the README div itself */
+    background-color: #f9f9f9; /* Light background to distinguish it */
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-bottom: 1rem; /* Space before the Run button */
+    text-align: left; /* Better for long text */
+    box-sizing: border-box; /* Padding and border included in width/height */
+}
+
+/* Styling for <pre> elements within README containers */
+#dalle-readme pre,
+#flux-readme pre,
+#gemini-readme pre,
+#translator-readme pre {
+    white-space: pre-wrap;   /* Wrap text while preserving spaces */
+    word-wrap: break-word;   /* Break long words to prevent overflow */
+    overflow-x: auto;        /* Allow horizontal scroll if necessary */
+    max-width: 100%;         /* Ensure it's not wider than the README container */
+    background-color: #f0f0f0; /* Slightly different background for pre blocks */
+    padding: 10px;
+    border-radius: 4px;
+}
+
+/* Styling for <code> elements not within <pre> (inline code) within READMEs */
+#dalle-readme code:not(pre code),
+#flux-readme code:not(pre code),
+#gemini-readme code:not(pre code),
+#translator-readme code:not(pre code) {
+    word-wrap: break-word;
+    background-color: #e7e7e7;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.85em;
+}
+
+code {
+    font-family: monospace;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Estilos para los elementos dinámicos */
+.status-message {
+    margin: 1rem 0;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ip-result, .translation-result {
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.ip-result h4, .translation-result h4 {
+    margin-top: 0;
+    color: #333;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .nav-links {
+        display: none; /* Hide the navigation links */
+        position: absolute;
+        right: 0;
+        top: 60px; /* Adjust based on header height */
+        background-color: #333;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .nav-links li {
+        margin: 0.5rem 0;
+    }
+
+    .nav-links.active {
+        display: flex; /* Show the navigation links when active */
+    }
+
+    .burger {
+        display: block; /* Show the burger icon */
+    }
+
+    .burger.active .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .burger.active .line2 {
+        opacity: 0;
+    }
+
+    .burger.active .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+    }
+}

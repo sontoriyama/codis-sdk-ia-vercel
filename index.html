@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Projects Showcase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">AI Showcase</div>
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="#dalle">DALL-E</a></li>
+                <li><a href="#flux">Flux Context</a></li>
+                <li><a href="#gemini">SST Gemini</a></li>
+                <li><a href="#translator">Translator</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="dalle" class="section">
+        <h2>DALL-E Project</h2>
+        <div class="content" id="dalle-content">
+            <button onclick="toggleVisibility('dalle-details')">Show/Hide Details</button>
+            <div id="dalle-details" style="display: none;">
+                <div id="dalle-readme"></div>
+                <h3>index.js</h3>
+                <pre><code id="dalle-code"></code></pre>
+            </div>
+            <button onclick="runDalle()">Run DALL-E</button>
+        </div>
+    </section>
+
+    <section id="flux" class="section">
+        <h2>Flux Context Project</h2>
+        <div class="content" id="flux-content">
+            <button onclick="toggleVisibility('flux-details')">Show/Hide Details</button>
+            <div id="flux-details" style="display: none;">
+                <div id="flux-readme"></div>
+                <h3>index.js</h3>
+                <pre><code id="flux-code"></code></pre>
+            </div>
+            <button onclick="runFlux()">Run Flux</button>
+        </div>
+    </section>
+
+    <section id="gemini" class="section">
+        <h2>SST Gemini Project</h2>
+        <div class="content" id="gemini-content">
+            <button onclick="toggleVisibility('gemini-details')">Show/Hide Details</button>
+            <div id="gemini-details" style="display: none;">
+                <div id="gemini-readme"></div>
+                <h3>index.js</h3>
+                <pre><code id="gemini-code"></code></pre>
+            </div>
+            <button onclick="runGemini()">Run Gemini</button>
+        </div>
+    </section>
+
+    <section id="translator" class="section">
+        <h2>Translator Project</h2>
+        <div class="content" id="translator-content">
+            <button onclick="toggleVisibility('translator-details')">Show/Hide Details</button>
+            <div id="translator-details" style="display: none;">
+                <div id="translator-readme"></div>
+                <h3>index.js</h3>
+                <pre><code id="translator-code"></code></pre>
+            </div>
+            <button onclick="runTranslator()">Run Translator</button>
+        </div>
+    </section>
+
+    <!-- Añadir la biblioteca marked para renderizar markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- Mensaje informativo sobre API keys -->
+    <div class="api-info" style="padding: 1rem; background-color: #f8f8f8; margin: 1rem; border-radius: 5px; text-align: center;">
+        <h3>Información importante</h3>
+        <p>Para ejecutar estos proyectos, necesitarás API keys de:</p>
+        <ul style="list-style: none; padding: 0;">
+            <li>OpenAI (para DALL-E, Gemini y Traductor)</li>
+            <li>Black Forest Labs (para Flux Context)</li>
+        </ul>
+        <p>Las API keys no se almacenan y solo se utilizan para las peticiones a las APIs correspondientes.</p>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
