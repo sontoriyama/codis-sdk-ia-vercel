@@ -1,0 +1,363 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Main content */
+main {
+    padding: 2rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+section h2 {
+    color: #4f46e5;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Input groups */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.input-group small {
+    display: block;
+    margin-top: 0.25rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* IP input container */
+.ip-input-container {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.ip-input-container input {
+    flex: 1;
+}
+
+.detect-btn {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.detect-btn:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+/* IP validation styles */
+.ip-valid {
+    border-color: #10b981 !important;
+    background-color: #f0fdf4;
+}
+
+.ip-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2;
+}
+
+/* Buttons */
+.analyze-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.analyze-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+}
+
+.analyze-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading animation */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Result section */
+.result-section {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.result-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.result-card h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.tool-info {
+    background: #f1f5f9;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid #4f46e5;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    overflow-x: auto;
+}
+
+.ai-analysis {
+    line-height: 1.7;
+    color: #374151;
+}
+
+.ai-analysis h4 {
+    color: #1e293b;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.ai-analysis ul {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.ai-analysis li {
+    margin-bottom: 0.5rem;
+}
+
+/* Result actions */
+.result-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.export-btn,
+.new-analysis-btn {
+    flex: 1;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.export-btn {
+    background: #059669;
+    color: white;
+}
+
+.export-btn:hover {
+    background: #047857;
+    transform: translateY(-1px);
+}
+
+.new-analysis-btn {
+    background: #6b7280;
+    color: white;
+}
+
+.new-analysis-btn:hover {
+    background: #4b5563;
+    transform: translateY(-1px);
+}
+
+/* Error section */
+.error-section {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.error-section h2 {
+    color: #dc2626;
+}
+
+.error-message {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    border-left: 4px solid #dc2626;
+    margin-bottom: 1rem;
+    color: #7f1d1d;
+}
+
+.retry-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+}
+
+/* Footer */
+footer {
+    background: #f8fafc;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    color: #6b7280;
+    border-top: 1px solid #e2e8f0;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer strong {
+    color: #4f46e5;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        margin: 0;
+    }
+    
+    header {
+        padding: 1.5rem;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    main {
+        padding: 1.5rem;
+    }
+    
+    .ip-input-container {
+        flex-direction: column;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    footer {
+        padding: 1rem;
+    }
+}

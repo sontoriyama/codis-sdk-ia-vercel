@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPT-IMAGE-1 Image Generator</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎨 GPT-IMAGE-1 Image Generator</h1>
+            <p>Genera imágenes increíbles con inteligencia artificial</p>
+        </header>
+
+        <div class="api-section">
+            <label for="apiKey">🔑 API Key de OpenAI:</label>
+            <input type="password" id="apiKey" placeholder="Introduce tu API Key de OpenAI" required>
+            <small>Tu API key se mantiene segura y no se almacena</small>
+        </div>
+
+        <div class="prompt-section">
+            <label for="prompt">✨ Describe tu imagen:</label>
+            <textarea id="prompt" placeholder="Ej: Un gato volando sobre una ciudad, en el estilo de animación de Studio Ghibli" rows="4" required></textarea>
+        </div>
+
+        <div class="options-section">
+            <div class="option-group">
+                <label for="size">📐 Tamaño:</label>
+                <select id="size">
+                    <option value="1024x1024">1024x1024 (Cuadrado)</option>
+                    <option value="1792x1024">1792x1024 (Horizontal)</option>
+                    <option value="1024x1792">1024x1792 (Vertical)</option>
+                </select>
+            </div>
+            
+            <div class="option-group">
+                <label for="quality">⭐ Calidad:</label>
+                <select id="quality">
+                    <option value="standard">Estándar</option>
+                    <option value="hd">HD (Mayor costo)</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="generateBtn" class="generate-btn">
+            <span class="btn-text">🚀 Generar Imagen</span>
+            <span class="loading" style="display: none;">⏳ Generando...</span>
+        </button>
+
+        <div id="result" class="result-section" style="display: none;">
+            <h3>🖼️ Imagen Generada:</h3>
+            <div class="image-container">
+                <img id="generatedImage" alt="Imagen generada por gpt-image-1">
+                <div class="image-actions">
+                    <button id="downloadBtn" class="action-btn">💾 Descargar</button>
+                    <button id="newImageBtn" class="action-btn">🔄 Nueva Imagen</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="error-section" style="display: none;">
+            <h3>❌ Error:</h3>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>

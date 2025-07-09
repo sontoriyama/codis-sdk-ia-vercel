@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor SDK AI Vercel</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Traductor SDK AI Vercel</h1>
+            <p>Traducción de textos usando Vercel AI SDK y OpenAI</p>
+        </header>
+
+        <main>
+            <!-- Sección de API Key -->
+            <section class="api-section">
+                <h2>🔑 Configuración</h2>
+                <div class="input-group">
+                    <label for="apiKey">API Key de OpenAI:</label>
+                    <input type="password" id="apiKey" placeholder="Introduce tu API Key de OpenAI">
+                    <small>Tu API key se almacena localmente y no se envía a ningún servidor externo</small>
+                </div>
+            </section>
+
+            <!-- Sección de traducción -->
+            <section class="translation-section">
+                <h2>📝 Traducción de Texto</h2>
+                
+                <!-- Configuración de idiomas -->
+                <div class="language-config">
+                    <div class="input-group">
+                        <label for="sourceLanguage">Idioma de origen:</label>
+                        <select id="sourceLanguage">
+                            <option value="auto">Detectar automáticamente</option>
+                            <option value="español">Español</option>
+                            <option value="inglés">Inglés</option>
+                            <option value="francés">Francés</option>
+                            <option value="alemán">Alemán</option>
+                            <option value="italiano">Italiano</option>
+                            <option value="portugués">Portugués</option>
+                            <option value="chino">Chino</option>
+                            <option value="japonés">Japonés</option>
+                            <option value="coreano">Coreano</option>
+                            <option value="ruso">Ruso</option>
+                            <option value="árabe">Árabe</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" id="swapBtn" class="swap-btn" title="Intercambiar idiomas">
+                        🔄
+                    </button>
+                    
+                    <div class="input-group">
+                        <label for="targetLanguage">Idioma de destino:</label>
+                        <select id="targetLanguage">
+                            <option value="inglés" selected>Inglés</option>
+                            <option value="español">Español</option>
+                            <option value="francés">Francés</option>
+                            <option value="alemán">Alemán</option>
+                            <option value="italiano">Italiano</option>
+                            <option value="portugués">Portugués</option>
+                            <option value="chino">Chino</option>
+                            <option value="japonés">Japonés</option>
+                            <option value="coreano">Coreano</option>
+                            <option value="ruso">Ruso</option>
+                            <option value="árabe">Árabe</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Área de texto -->
+                <div class="text-areas">
+                    <div class="text-input-section">
+                        <div class="textarea-header">
+                            <label for="sourceText">Texto a traducir:</label>
+                            <div class="text-controls">
+                                <button type="button" id="pasteBtn" class="control-btn" title="Pegar desde portapapeles">📋</button>
+                                <button type="button" id="clearBtn" class="control-btn" title="Limpiar texto">🗑️</button>
+                                <span class="char-count">0 / 5000</span>
+                            </div>
+                        </div>
+                        <textarea id="sourceText" placeholder="Escribe o pega aquí el texto que quieres traducir..." maxlength="5000" rows="8"></textarea>
+                    </div>
+
+                    <div class="text-output-section">
+                        <div class="textarea-header">
+                            <label for="translatedText">Traducción:</label>
+                            <div class="text-controls">
+                                <button type="button" id="copyBtn" class="control-btn" title="Copiar traducción">📄</button>
+                                <button type="button" id="speakBtn" class="control-btn" title="Escuchar traducción">🔊</button>
+                            </div>
+                        </div>
+                        <textarea id="translatedText" placeholder="La traducción aparecerá aquí..." readonly rows="8"></textarea>
+                    </div>
+                </div>
+
+                <!-- Opciones de traducción -->
+                <div class="translation-options">
+                    <h3>⚙️ Opciones de traducción</h3>
+                    <div class="options-grid">
+                        <label class="option-item">
+                            <input type="checkbox" id="formalTone">
+                            <span>Tono formal</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="contextAware" checked>
+                            <span>Traducción contextual</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="preserveFormatting">
+                            <span>Preservar formato</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" id="translateBtn" class="translate-btn">
+                    <span class="btn-text">🌐 Traducir Texto</span>
+                    <div class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>Traduciendo...</span>
+                    </div>
+                </button>
+            </section>
+
+            <!-- Sección de resultados adicionales -->
+            <section id="additionalInfo" class="additional-info" style="display: none;">
+                <h2>ℹ️ Información Adicional</h2>
+                <div id="translationInfo" class="translation-info"></div>
+            </section>
+
+            <!-- Sección de errores -->
+            <section id="error" class="error-section" style="display: none;">
+                <h2>❌ Error</h2>
+                <div id="errorMessage" class="error-message"></div>
+                <button type="button" id="retryBtn" class="retry-btn">🔄 Reintentar</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by <strong>Vercel AI SDK</strong> y <strong>OpenAI GPT-4o-mini</strong></p>
+            <p>Traducción inteligente con comprensión contextual avanzada</p>
+        </footer>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>

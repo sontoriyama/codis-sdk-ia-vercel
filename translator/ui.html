@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Translator</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 AI Translator</h1>
+            <p>Traduce texto con inteligencia artificial avanzada</p>
+        </header>
+
+        <div class="api-section">
+            <label for="apiKey">🔑 API Key de Google Gemini:</label>
+            <input type="password" id="apiKey" placeholder="Introduce tu API Key de Google Gemini" required>
+            <small>Tu API key se mantiene segura y no se almacena</small>
+        </div>
+
+        <div class="language-selection">
+            <div class="language-group">
+                <label for="sourceLanguage">🗣️ Idioma origen:</label>
+                <select id="sourceLanguage">
+                    <option value="auto">🔍 Detectar automáticamente</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="en">🇺🇸 Inglés</option>
+                    <option value="fr">🇫🇷 Francés</option>
+                    <option value="de">🇩🇪 Alemán</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="pt">🇵🇹 Portugués</option>
+                    <option value="ru">🇷🇺 Ruso</option>
+                    <option value="ja">🇯🇵 Japonés</option>
+                    <option value="ko">🇰🇷 Coreano</option>
+                    <option value="zh">🇨🇳 Chino</option>
+                    <option value="ar">🇸🇦 Árabe</option>
+                    <option value="hi">🇮🇳 Hindi</option>
+                </select>
+            </div>
+            
+            <button id="swapBtn" class="swap-btn" title="Intercambiar idiomas">
+                🔄
+            </button>
+            
+            <div class="language-group">
+                <label for="targetLanguage">🎯 Idioma destino:</label>
+                <select id="targetLanguage">
+                    <option value="en">🇺🇸 Inglés</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="fr">🇫🇷 Francés</option>
+                    <option value="de">🇩🇪 Alemán</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="pt">🇵🇹 Portugués</option>
+                    <option value="ru">🇷🇺 Ruso</option>
+                    <option value="ja">🇯🇵 Japonés</option>
+                    <option value="ko">🇰🇷 Coreano</option>
+                    <option value="zh">🇨🇳 Chino</option>
+                    <option value="ar">🇸🇦 Árabe</option>
+                    <option value="hi">🇮🇳 Hindi</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="translation-area">
+            <div class="input-section">
+                <label for="sourceText">📝 Texto a traducir:</label>
+                <textarea id="sourceText" placeholder="Escribe o pega aquí el texto que quieres traducir..." rows="8"></textarea>
+                <div class="text-actions">
+                    <button id="clearBtn" class="text-action-btn">🗑️ Limpiar</button>
+                    <button id="pasteBtn" class="text-action-btn">📋 Pegar</button>
+                    <span class="char-count">0 caracteres</span>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <label for="translatedText">✨ Traducción:</label>
+                <textarea id="translatedText" placeholder="La traducción aparecerá aquí..." rows="8" readonly></textarea>
+                <div class="text-actions">
+                    <button id="copyBtn" class="text-action-btn" disabled>📄 Copiar</button>
+                    <button id="speakBtn" class="text-action-btn" disabled>🔊 Escuchar</button>
+                    <span class="translation-info"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="options-section">
+            <div class="option-group">
+                <label class="option-item">
+                    <input type="checkbox" id="formalTone" checked>
+                    <span class="checkmark"></span>
+                    🎩 Tono formal
+                </label>
+            </div>
+            
+            <div class="option-group">
+                <label class="option-item">
+                    <input type="checkbox" id="contextAware">
+                    <span class="checkmark"></span>
+                    🧠 Traducción contextual
+                </label>
+            </div>
+            
+            <div class="option-group">
+                <label class="option-item">
+                    <input type="checkbox" id="preserveFormatting">
+                    <span class="checkmark"></span>
+                    📐 Preservar formato
+                </label>
+            </div>
+        </div>
+
+        <button id="translateBtn" class="translate-btn">
+            <span class="btn-text">🚀 Traducir</span>
+            <span class="loading" style="display: none;">⏳ Traduciendo...</span>
+        </button>
+
+        <div id="result" class="result-section" style="display: none;">
+            <h3>📊 Información adicional:</h3>
+            <div class="result-content">
+                <div id="detectedLanguage" class="info-item"></div>
+                <div id="confidence" class="info-item"></div>
+                <div id="alternativeTranslations" class="info-item"></div>
+            </div>
+        </div>
+
+        <div id="error" class="error-section" style="display: none;">
+            <h3>❌ Error:</h3>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>

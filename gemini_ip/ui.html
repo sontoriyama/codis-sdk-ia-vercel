@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini IP Analyzer</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Gemini IP Analyzer</h1>
+            <p>Analiza direcciones IP con inteligencia artificial avanzada</p>
+        </header>
+
+        <div class="api-section">
+            <label for="apiKey">🔑 API Key de Google Gemini:</label>
+            <input type="password" id="apiKey" placeholder="Introduce tu API Key de Google Gemini" required>
+            <small>Tu API key se mantiene segura y no se almacena</small>
+        </div>
+
+        <div class="ip-input-section">
+            <label for="ipAddress">🌐 Dirección IP a analizar:</label>
+            <div class="ip-input-container">
+                <input type="text" id="ipAddress" placeholder="Ej: 8.8.8.8 o 192.168.1.1" required>
+                <button id="detectBtn" class="detect-btn" title="Detectar mi IP">
+                    📍 Mi IP
+                </button>
+            </div>
+            <small>Introduce una dirección IPv4 o IPv6 válida</small>
+        </div>
+
+        <div class="analysis-options">
+            <h3>🔧 Opciones de análisis:</h3>
+            <div class="options-grid">
+                <label class="option-item">
+                    <input type="checkbox" id="geoLocation" checked>
+                    <span class="checkmark"></span>
+                    📍 Geolocalización
+                </label>
+                <label class="option-item">
+                    <input type="checkbox" id="security" checked>
+                    <span class="checkmark"></span>
+                    🛡️ Análisis de seguridad
+                </label>
+                <label class="option-item">
+                    <input type="checkbox" id="network" checked>
+                    <span class="checkmark"></span>
+                    🌐 Información de red
+                </label>
+                <label class="option-item">
+                    <input type="checkbox" id="reputation" checked>
+                    <span class="checkmark"></span>
+                    ⭐ Reputación
+                </label>
+            </div>
+        </div>
+
+        <div class="custom-prompt-section">
+            <label for="customPrompt">💭 Pregunta personalizada (opcional):</label>
+            <textarea id="customPrompt" placeholder="Ej: ¿Esta IP representa algún riesgo de seguridad? ¿Qué servicios podría estar ejecutando?" rows="3"></textarea>
+        </div>
+
+        <button id="analyzeBtn" class="analyze-btn">
+            <span class="btn-text">🚀 Analizar IP</span>
+            <span class="loading" style="display: none;">⏳ Analizando...</span>
+        </button>
+
+        <div id="result" class="result-section" style="display: none;">
+            <h3>📊 Resultado del análisis:</h3>
+            <div class="analysis-content">
+                <div class="ip-info">
+                    <h4>🌐 Información básica:</h4>
+                    <div id="basicInfo" class="info-block"></div>
+                </div>
+                <div class="ai-analysis">
+                    <h4>🤖 Análisis de IA:</h4>
+                    <div id="aiAnalysis" class="info-block"></div>
+                </div>
+            </div>
+            <div class="result-actions">
+                <button id="exportBtn" class="action-btn">📄 Exportar</button>
+                <button id="newAnalysisBtn" class="action-btn">🔄 Nuevo Análisis</button>
+            </div>
+        </div>
+
+        <div id="error" class="error-section" style="display: none;">
+            <h3>❌ Error:</h3>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux Image Editor</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌟 Flux Image Editor</h1>
+            <p>Edita y transforma imágenes con IA avanzada</p>
+        </header>
+
+        <div class="api-section">
+            <label for="apiKey">🔑 API Key de Replicate:</label>
+            <input type="password" id="apiKey" placeholder="Introduce tu API Key de Replicate" required>
+            <small>Tu API key se mantiene segura y no se almacena</small>
+        </div>
+
+        <div class="image-upload-section">
+            <label for="imageUpload">📸 Imagen a editar:</label>
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                <div class="upload-placeholder">
+                    <span class="upload-icon">📁</span>
+                    <p>Haz clic aquí o arrastra una imagen</p>
+                    <small>Formatos soportados: JPG, PNG, WebP</small>
+                </div>
+                <img id="previewImage" style="display: none;" alt="Vista previa">
+            </div>
+        </div>
+
+        <div class="prompt-section">
+            <label for="prompt">✨ Describe los cambios que quieres hacer:</label>
+            <textarea id="prompt" placeholder="Ej: Cambia el fondo a un paisaje de montañas, añade efectos de luz dorada" rows="4" required></textarea>
+        </div>
+
+        <div class="options-section">
+            <div class="option-group">
+                <label for="strength">💪 Intensidad de cambio:</label>
+                <input type="range" id="strength" min="0.1" max="1" step="0.1" value="0.8">
+                <span id="strengthValue">0.8</span>
+            </div>
+            
+            <div class="option-group">
+                <label for="steps">🔄 Pasos de procesamiento:</label>
+                <input type="range" id="steps" min="10" max="50" step="5" value="25">
+                <span id="stepsValue">25</span>
+            </div>
+        </div>
+
+        <button id="editBtn" class="edit-btn">
+            <span class="btn-text">🚀 Editar Imagen</span>
+            <span class="loading" style="display: none;">⏳ Procesando...</span>
+        </button>
+
+        <div id="result" class="result-section" style="display: none;">
+            <h3>🖼️ Imagen Editada:</h3>
+            <div class="image-container">
+                <div class="image-comparison">
+                    <div class="image-before">
+                        <h4>Antes</h4>
+                        <img id="beforeImage" alt="Imagen original">
+                    </div>
+                    <div class="image-after">
+                        <h4>Después</h4>
+                        <img id="afterImage" alt="Imagen editada">
+                    </div>
+                </div>
+                <div class="image-actions">
+                    <button id="downloadBtn" class="action-btn">💾 Descargar</button>
+                    <button id="newEditBtn" class="action-btn">🔄 Nueva Edición</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="error" class="error-section" style="display: none;">
+            <h3>❌ Error:</h3>
+            <p id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>

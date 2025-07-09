@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Calling SDK AI - IP Analyzer</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 Tool Calling SDK AI</h1>
+            <p>Análisis de IP usando Tool Calling con Vercel AI SDK</p>
+        </header>
+
+        <main>
+            <!-- Sección de API Key -->
+            <section class="api-section">
+                <h2>🔑 Configuración</h2>
+                <div class="input-group">
+                    <label for="apiKey">API Key de OpenAI:</label>
+                    <input type="password" id="apiKey" placeholder="Introduce tu API Key de OpenAI">
+                    <small>Tu API key se almacena localmente y no se envía a ningún servidor externo</small>
+                </div>
+            </section>
+
+            <!-- Sección de entrada -->
+            <section class="input-section">
+                <h2>📍 Análisis de IP</h2>
+                <div class="input-group">
+                    <label for="ipAddress">Dirección IP:</label>
+                    <div class="ip-input-container">
+                        <input type="text" id="ipAddress" placeholder="Ej: 104.28.223.105" value="104.28.223.105">
+                        <button type="button" id="detectBtn" class="detect-btn">Detectar mi IP</button>
+                    </div>
+                    <small>Introduce una dirección IP válida para analizar</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="customPrompt">Prompt personalizado (opcional):</label>
+                    <textarea id="customPrompt" placeholder="Ej: Analiza esta IP y dime si es segura para mi empresa" rows="3"></textarea>
+                    <small>Personaliza el análisis con instrucciones específicas</small>
+                </div>
+
+                <button type="button" id="analyzeBtn" class="analyze-btn">
+                    <span class="btn-text">🔍 Analizar IP</span>
+                    <div class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <span>Analizando...</span>
+                    </div>
+                </button>
+            </section>
+
+            <!-- Sección de resultados -->
+            <section id="result" class="result-section" style="display: none;">
+                <h2>📊 Resultados del Análisis</h2>
+                
+                <div class="result-card">
+                    <h3>🔧 Información de Tool Calling</h3>
+                    <div id="toolInfo" class="tool-info"></div>
+                </div>
+
+                <div class="result-card">
+                    <h3>🤖 Análisis de IA</h3>
+                    <div id="aiAnalysis" class="ai-analysis"></div>
+                </div>
+
+                <div class="result-actions">
+                    <button type="button" id="exportBtn" class="export-btn">💾 Exportar Resultados</button>
+                    <button type="button" id="newAnalysisBtn" class="new-analysis-btn">🔄 Nuevo Análisis</button>
+                </div>
+            </section>
+
+            <!-- Sección de errores -->
+            <section id="error" class="error-section" style="display: none;">
+                <h2>❌ Error</h2>
+                <div id="errorMessage" class="error-message"></div>
+                <button type="button" id="retryBtn" class="retry-btn">🔄 Reintentar</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by <strong>Vercel AI SDK</strong> y <strong>OpenAI GPT-4</strong></p>
+            <p>Tool Calling permite que la IA use herramientas externas para obtener información en tiempo real</p>
+        </footer>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>

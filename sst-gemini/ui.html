@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SST Gemini - Análisis de IP con IA</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔍 SST Gemini</h1>
+            <p>Análisis inteligente de direcciones IP con herramientas de IA</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Configuración de API Key -->
+            <section class="config-section">
+                <h2>⚙️ Configuración</h2>
+                <div class="input-group">
+                    <label for="apiKey">API Key de OpenAI:</label>
+                    <div class="input-with-button">
+                        <input type="password" id="apiKey" placeholder="Ingresa tu API Key de OpenAI">
+                        <button type="button" id="toggleApiKey" class="toggle-btn" title="Mostrar/Ocultar API Key">
+                            👁️
+                        </button>
+                    </div>
+                    <small class="help-text">Tu API Key se guarda localmente y nunca se comparte</small>
+                </div>
+            </section>
+
+            <!-- Entrada de IP -->
+            <section class="ip-section">
+                <h2>🌐 Dirección IP</h2>
+                <div class="input-group">
+                    <label for="ipAddress">Dirección IP a analizar:</label>
+                    <div class="input-with-button">
+                        <input type="text" id="ipAddress" placeholder="Ej: 104.28.223.105 o 8.8.8.8">
+                        <button type="button" id="detectIpBtn" class="secondary-btn" title="Detectar mi IP">
+                            📍 Mi IP
+                        </button>
+                    </div>
+                    <div class="validation-message" id="ipValidation"></div>
+                </div>
+            </section>
+
+            <!-- Prompt personalizado -->
+            <section class="prompt-section">
+                <h2>💭 Análisis Personalizado</h2>
+                <div class="input-group">
+                    <label for="customPrompt">Prompt personalizado (opcional):</label>
+                    <textarea id="customPrompt" rows="3" placeholder="Ej: Analiza esta IP desde el punto de vista de seguridad y geolocalización"></textarea>
+                    <small class="help-text">Si no especificas un prompt, se usará uno predeterminado</small>
+                </div>
+            </section>
+
+            <!-- Opciones de análisis -->
+            <section class="options-section">
+                <h2>🎯 Opciones de Análisis</h2>
+                <div class="options-grid">
+                    <label class="option-item">
+                        <input type="checkbox" id="includeGeolocation" checked>
+                        <span class="checkmark"></span>
+                        <div class="option-content">
+                            <strong>Geolocalización</strong>
+                            <small>Ubicación geográfica y coordenadas</small>
+                        </div>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="includeSecurity" checked>
+                        <span class="checkmark"></span>
+                        <div class="option-content">
+                            <strong>Análisis de Seguridad</strong>
+                            <small>Evaluación de riesgos y amenazas</small>
+                        </div>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="includeNetwork" checked>
+                        <span class="checkmark"></span>
+                        <div class="option-content">
+                            <strong>Información de Red</strong>
+                            <small>ISP, organización y infraestructura</small>
+                        </div>
+                    </label>
+                    <label class="option-item">
+                        <input type="checkbox" id="includeReputation" checked>
+                        <span class="checkmark"></span>
+                        <div class="option-content">
+                            <strong>Reputación</strong>
+                            <small>Historial y confiabilidad</small>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Botón de análisis -->
+            <section class="action-section">
+                <button id="analyzeBtn" class="analyze-btn">
+                    <span class="btn-text">🔍 Analizar IP</span>
+                    <span class="btn-loading">⏳ Analizando...</span>
+                </button>
+            </section>
+
+            <!-- Resultados -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2>📊 Resultados del Análisis</h2>
+                
+                <!-- Información básica de la herramienta -->
+                <div class="result-card">
+                    <h3>🛠️ Información Técnica</h3>
+                    <div class="result-content">
+                        <pre id="toolResults"></pre>
+                    </div>
+                    <div class="result-actions">
+                        <button id="copyToolResults" class="copy-btn">📋 Copiar</button>
+                    </div>
+                </div>
+
+                <!-- Análisis de IA -->
+                <div class="result-card">
+                    <h3>🤖 Análisis de IA</h3>
+                    <div class="result-content">
+                        <div id="aiAnalysis"></div>
+                    </div>
+                    <div class="result-actions">
+                        <button id="copyAiAnalysis" class="copy-btn">📋 Copiar</button>
+                        <button id="speakAnalysis" class="speak-btn">🔊 Escuchar</button>
+                    </div>
+                </div>
+
+                <!-- Acciones adicionales -->
+                <div class="additional-actions">
+                    <button id="exportResults" class="export-btn">💾 Exportar Resultados</button>
+                    <button id="newAnalysis" class="secondary-btn">🔄 Nuevo Análisis</button>
+                </div>
+            </section>
+
+            <!-- Mensajes de error -->
+            <section class="error-section" id="errorSection" style="display: none;">
+                <div class="error-message">
+                    <h3>❌ Error</h3>
+                    <p id="errorMessage"></p>
+                    <button id="dismissError" class="secondary-btn">Cerrar</button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Powered by <strong>SST Gemini</strong> | OpenAI GPT-4 | IP.Guide API</p>
+            <small>Análisis inteligente de direcciones IP con herramientas de IA avanzadas</small>
+        </footer>
+    </div>
+
+    <script src="ui.js"></script>
+</body>
+</html>
