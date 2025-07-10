@@ -41,7 +41,7 @@ header p {
     font-size: 1.1em;
 }
 
-.api-section, .prompt-section, .options-section {
+.api-section, .prompt-section, .options-section, .context-section {
     margin-bottom: 25px;
 }
 
@@ -53,7 +53,7 @@ label {
     font-size: 1.1em;
 }
 
-input[type="password"], textarea, select {
+input[type="password"], input[type="file"], textarea, select {
     width: 100%;
     padding: 12px 16px;
     border: 2px solid #e1e5e9;
@@ -63,7 +63,7 @@ input[type="password"], textarea, select {
     background: #fff;
 }
 
-input[type="password"]:focus, textarea:focus, select:focus {
+input[type="password"]:focus, input[type="file"]:focus, textarea:focus, select:focus {
     outline: none;
     border-color: #667eea;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
@@ -84,7 +84,7 @@ small {
 
 .options-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
 }
 
@@ -201,6 +201,49 @@ small {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Context image styles */
+.context-section {
+    border: 2px dashed #e1e5e9;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.context-section:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.context-preview {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#contextImagePreview {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+}
+
+.remove-context-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.remove-context-btn:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {

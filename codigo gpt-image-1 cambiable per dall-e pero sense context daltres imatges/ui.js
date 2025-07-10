@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const promptInput = document.getElementById('prompt');
     const sizeSelect = document.getElementById('size');
     const qualitySelect = document.getElementById('quality');
+    const modelSelect = document.getElementById('model');
+    const contextImageInput = document.getElementById('contextImage');
+    const contextImagePreview = document.getElementById('contextImagePreview');
+    const removeContextBtn = document.getElementById('removeContextBtn');
     const generateBtn = document.getElementById('generateBtn');
     const btnText = document.querySelector('.btn-text');
     const loading = document.querySelector('.loading');
@@ -13,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage = document.getElementById('errorMessage');
     const downloadBtn = document.getElementById('downloadBtn');
     const newImageBtn = document.getElementById('newImageBtn');
+    const useAsContextBtn = document.getElementById('useAsContextBtn');
 
     // Cargar API key guardada
     const savedApiKey = localStorage.getItem('gptimage1_api_key');
@@ -65,6 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const prompt = promptInput.value.trim();
         const size = sizeSelect.value;
         const quality = qualitySelect.value;
+        const model = modelSelect.value;
+        const contextImage = contextImagePreview.src && contextImagePreview.src.startsWith('data:') ? 
+            contextImagePreview.src : null;
 
         // Validaciones
         if (!apiKey) {
@@ -93,12 +101,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Authorization': `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
-                    model: 'gpt-image-1',
+                    model: model,
                     prompt: prompt,
                     n: 1,
                     size: size,
                     quality: quality,
                     response_format: 'url'
+                    // Note: context_image is not yet supported in the OpenAI API
+                    // This is prepared for future implementation
                 })
             });
 
@@ -156,10 +166,68 @@ document.addEventListener('DOMContentLoaded', function() {
         promptInput.focus();
     }
 
+    // Función para manejar la carga de imagen de contexto
+    function handleContextImageUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    contextImagePreview.src = e.target.result;
+                    contextImagePreview.style.display = 'block';
+                    removeContextBtn.style.display = 'inline-block';
+                    document.getElementById('contextImageSection').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                showError('Por favor selecciona un archivo de imagen válido');
+            }
+        }
+    }
+
+    // Función para remover imagen de contexto
+    function removeContextImage() {
+        contextImagePreview.src = '';
+        contextImagePreview.style.display = 'none';
+        removeContextBtn.style.display = 'none';
+        contextImageInput.value = '';
+        document.getElementById('contextImageSection').style.display = 'none';
+    }
+
+    // Función para usar imagen generada como contexto
+    function useGeneratedAsContext() {
+        if (generatedImage.src) {
+            contextImagePreview.src = generatedImage.src;
+            contextImagePreview.style.display = 'block';
+            removeContextBtn.style.display = 'inline-block';
+            document.getElementById('contextImageSection').style.display = 'block';
+        }
+    }
+
+    // Función para convertir imagen a Base64
+    async function imageToBase64(imageUrl) {
+        try {
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        } catch (error) {
+            console.error('Error converting image to base64:', error);
+            return null;
+        }
+    }
+
     // Event listeners
     generateBtn.addEventListener('click', generateImage);
     downloadBtn.addEventListener('click', downloadImage);
     newImageBtn.addEventListener('click', generateNewImage);
+    contextImageInput.addEventListener('change', handleContextImageUpload);
+    removeContextBtn.addEventListener('click', removeContextImage);
+    useAsContextBtn.addEventListener('click', useGeneratedAsContext);
 
     // Permitir generar con Enter en el prompt
     promptInput.addEventListener('keydown', function(e) {
