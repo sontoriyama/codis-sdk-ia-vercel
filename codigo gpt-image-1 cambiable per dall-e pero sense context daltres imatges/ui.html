@@ -10,7 +10,8 @@
     <div class="container">
         <header>
             <h1>🎨 GPT-IMAGE-1 Image Generator</h1>
-            <p>Genera imágenes increíbles con inteligencia artificial</p>
+            <p>Genera y edita imágenes increíbles con inteligencia artificial</p>
+            <p class="subtitle">Genera imágenes nuevas o edita imágenes existentes usando IA</p>
         </header>
 
         <div class="api-section">
@@ -55,7 +56,7 @@
         <div class="context-section">
             <label for="contextImage">🖼️ Imagen de contexto (opcional):</label>
             <input type="file" id="contextImage" accept="image/*">
-            <small>Sube una imagen para usar como referencia en la generación</small>
+            <small>Sube una imagen para <strong>editarla</strong> (solo DALL-E 2) o <strong>usarla como referencia</strong> en la generación</small>
             
             <div id="contextImageSection" class="context-preview" style="display: none;">
                 <img id="contextImagePreview" alt="Imagen de contexto" style="display: none;">
@@ -64,8 +65,8 @@
         </div>
 
         <button id="generateBtn" class="generate-btn">
-            <span class="btn-text">🚀 Generar Imagen</span>
-            <span class="loading" style="display: none;">⏳ Generando...</span>
+            <span class="btn-text">🚀 Generar/Editar Imagen</span>
+            <span class="loading" style="display: none;">⏳ Procesando...</span>
         </button>
 
         <div id="result" class="result-section" style="display: none;">

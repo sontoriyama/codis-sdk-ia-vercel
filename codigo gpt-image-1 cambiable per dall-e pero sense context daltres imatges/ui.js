@@ -90,27 +90,25 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        // Validar compatibilidad del modelo con edición
+        if (contextImage && model !== 'dall-e-2') {
+            showError('La edición de imágenes solo está disponible con DALL-E 2. Cambia el modelo o remueve la imagen de contexto.');
+            return;
+        }
+
         hideMessages();
         setButtonLoading(true);
 
         try {
-            const response = await fetch('https://api.openai.com/v1/images/generations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: model,
-                    prompt: prompt,
-                    n: 1,
-                    size: size,
-                    quality: quality,
-                    response_format: 'url'
-                    // Note: context_image is not yet supported in the OpenAI API
-                    // This is prepared for future implementation
-                })
-            });
+            let response;
+            
+            if (contextImage) {
+                // Usar la API de edición de imágenes cuando hay una imagen de contexto
+                response = await editImageWithContext(apiKey, prompt, contextImage, size, quality, model);
+            } else {
+                // Usar la API de generación normal cuando no hay imagen de contexto
+                response = await generateNewImage(apiKey, prompt, size, quality, model);
+            }
 
             const data = await response.json();
 
@@ -147,6 +145,61 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Función para generar imagen nueva (sin contexto)
+    async function generateNewImage(apiKey, prompt, size, quality, model) {
+        return await fetch('https://api.openai.com/v1/images/generations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: model,
+                prompt: prompt,
+                n: 1,
+                size: size,
+                quality: quality,
+                response_format: 'url'
+            })
+        });
+    }
+
+    // Función para editar imagen con contexto
+    async function editImageWithContext(apiKey, prompt, contextImage, size, quality, model) {
+        // Convertir base64 a blob para el FormData
+        const base64Data = contextImage.split(',')[1];
+        const mimeType = contextImage.split(',')[0].split(':')[1].split(';')[0];
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const imageBlob = new Blob([byteArray], { type: mimeType });
+
+        // Crear FormData para la API de edición
+        const formData = new FormData();
+        formData.append('image', imageBlob, 'context-image.png');
+        formData.append('prompt', prompt);
+        formData.append('n', '1');
+        formData.append('size', size);
+        formData.append('response_format', 'url');
+        
+        // Solo añadir modelo si es DALL-E 2 (DALL-E 3 no soporta edición)
+        if (model === 'dall-e-2') {
+            formData.append('model', model);
+        }
+
+        return await fetch('https://api.openai.com/v1/images/edits', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`
+                // No incluir Content-Type para FormData, el navegador lo establecerá automáticamente
+            },
+            body: formData
+        });
+    }
+
     // Función para descargar imagen
     function downloadImage() {
         const imageUrl = generatedImage.src;
@@ -177,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     contextImagePreview.style.display = 'block';
                     removeContextBtn.style.display = 'inline-block';
                     document.getElementById('contextImageSection').style.display = 'block';
+                    updateButtonText();
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -192,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
         removeContextBtn.style.display = 'none';
         contextImageInput.value = '';
         document.getElementById('contextImageSection').style.display = 'none';
+        updateButtonText();
     }
 
     // Función para usar imagen generada como contexto
@@ -201,6 +256,7 @@ document.addEventListener('DOMContentLoaded', function() {
             contextImagePreview.style.display = 'block';
             removeContextBtn.style.display = 'inline-block';
             document.getElementById('contextImageSection').style.display = 'block';
+            updateButtonText();
         }
     }
 
@@ -221,6 +277,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Función para actualizar el texto del botón según el modo
+    function updateButtonText() {
+        const hasContextImage = contextImagePreview.src && contextImagePreview.src.startsWith('data:');
+        const currentModel = modelSelect.value;
+        
+        if (hasContextImage) {
+            if (currentModel === 'dall-e-2') {
+                btnText.textContent = '🎨 Editar Imagen';
+            } else {
+                btnText.textContent = '🚀 Generar con Referencia';
+            }
+        } else {
+            btnText.textContent = '🚀 Generar Imagen';
+        }
+    }
+
     // Event listeners
     generateBtn.addEventListener('click', generateImage);
     downloadBtn.addEventListener('click', downloadImage);
@@ -228,6 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
     contextImageInput.addEventListener('change', handleContextImageUpload);
     removeContextBtn.addEventListener('click', removeContextImage);
     useAsContextBtn.addEventListener('click', useGeneratedAsContext);
+    modelSelect.addEventListener('change', updateButtonText);
 
     // Permitir generar con Enter en el prompt
     promptInput.addEventListener('keydown', function(e) {
