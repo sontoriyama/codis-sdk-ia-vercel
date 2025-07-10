@@ -1,8 +1,4 @@
 // Importamos las librerías necesarias
-
-//refet dsp de borrarlo, per lo que putser no és tal com hauria de ser
-//tinc l'original al zip
-
 import { generateText, tool } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';

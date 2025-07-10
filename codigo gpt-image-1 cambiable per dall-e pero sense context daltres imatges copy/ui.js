@@ -91,8 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Validar compatibilidad del modelo con edición
-        if (contextImage && model !== 'dall-e-2' && model !== 'gpt-image-1') {
-            showError('La edición de imágenes solo está disponible con DALL-E 2 y GPT-Image-1. Cambia el modelo o remueve la imagen de contexto.');
+        if (contextImage && model !== 'dall-e-2') {
+            showError('La edición de imágenes solo está disponible con DALL-E 2. Cambia el modelo o remueve la imagen de contexto.');
             return;
         }
 
@@ -116,28 +116,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 throw new Error(data.error?.message || `Error ${response.status}: ${response.statusText}`);
             }
 
-            // Manejar respuesta de GPT-Image-1 vs DALL-E
-            if (model === 'gpt-image-1') {
-                // GPT-Image-1 devuelve la imagen en el contenido del mensaje
-                if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
-                    const content = data.choices[0].message.content;
-                    // Buscar URL de imagen en el contenido
-                    const imageUrlMatch = content.match(/https:\/\/[^\s]+\.(png|jpg|jpeg|gif|webp)/i);
-                    if (imageUrlMatch) {
-                        showResult(imageUrlMatch[0]);
-                    } else {
-                        throw new Error('No se encontró una URL de imagen válida en la respuesta de GPT-Image-1.');
-                    }
-                } else {
-                    throw new Error('Respuesta inesperada de GPT-Image-1. No se pudo generar la imagen.');
-                }
+            if (data.data && data.data[0] && data.data[0].url) {
+                showResult(data.data[0].url);
             } else {
-                // DALL-E 2 y DALL-E 3
-                if (data.data && data.data[0] && data.data[0].url) {
-                    showResult(data.data[0].url);
-                } else {
-                    throw new Error('No se pudo generar la imagen. Respuesta inesperada del servidor.');
-                }
+                throw new Error('No se pudo generar la imagen. Respuesta inesperada del servidor.');
             }
 
         } catch (error) {
@@ -165,117 +147,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Función para generar imagen nueva (sin contexto)
     async function generateNewImage(apiKey, prompt, size, quality, model) {
-        // GPT-Image-1 usa un endpoint diferente y estructura de datos diferente
-        if (model === 'gpt-image-1') {
-            return await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-4o',
-                    messages: [
-                        {
-                            role: 'user',
-                            content: [
-                                {
-                                    type: 'text',
-                                    text: `Generate an image: ${prompt}`
-                                }
-                            ]
-                        }
-                    ],
-                    max_tokens: 300
-                })
-            });
-        } else {
-            // Para DALL-E 2 y DALL-E 3
-            return await fetch('https://api.openai.com/v1/images/generations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: model,
-                    prompt: prompt,
-                    n: 1,
-                    size: size,
-                    quality: quality,
-                    response_format: 'url'
-                })
-            });
-        }
+        return await fetch('https://api.openai.com/v1/images/generations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: model,
+                prompt: prompt,
+                n: 1,
+                size: size,
+                quality: quality,
+                response_format: 'url'
+            })
+        });
     }
 
     // Función para editar imagen con contexto
     async function editImageWithContext(apiKey, prompt, contextImage, size, quality, model) {
-        if (model === 'gpt-image-1') {
-            // GPT-Image-1 maneja imágenes de contexto de manera diferente
-            return await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-4o',
-                    messages: [
-                        {
-                            role: 'user',
-                            content: [
-                                {
-                                    type: 'text',
-                                    text: `Edit this image: ${prompt}`
-                                },
-                                {
-                                    type: 'image_url',
-                                    image_url: {
-                                        url: contextImage
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    max_tokens: 300
-                })
-            });
-        } else {
-            // Para DALL-E 2 (DALL-E 3 no soporta edición)
-            // Convertir base64 a blob para el FormData
-            const base64Data = contextImage.split(',')[1];
-            const mimeType = contextImage.split(',')[0].split(':')[1].split(';')[0];
-            const byteCharacters = atob(base64Data);
-            const byteNumbers = new Array(byteCharacters.length);
-            for (let i = 0; i < byteCharacters.length; i++) {
-                byteNumbers[i] = byteCharacters.charCodeAt(i);
-            }
-            const byteArray = new Uint8Array(byteNumbers);
-            const imageBlob = new Blob([byteArray], { type: mimeType });
-
-            // Crear FormData para la API de edición
-            const formData = new FormData();
-            formData.append('image', imageBlob, 'context-image.png');
-            formData.append('prompt', prompt);
-            formData.append('n', '1');
-            formData.append('size', size);
-            formData.append('response_format', 'url');
-            
-            // Solo añadir modelo si es DALL-E 2 (DALL-E 3 no soporta edición)
-            if (model === 'dall-e-2') {
-                formData.append('model', model);
-            }
-
-            return await fetch('https://api.openai.com/v1/images/edits', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`
-                    // No incluir Content-Type para FormData, el navegador lo establecerá automáticamente
-                },
-                body: formData
-            });
+        // Convertir base64 a blob para el FormData
+        const base64Data = contextImage.split(',')[1];
+        const mimeType = contextImage.split(',')[0].split(':')[1].split(';')[0];
+        const byteCharacters = atob(base64Data);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
         }
+        const byteArray = new Uint8Array(byteNumbers);
+        const imageBlob = new Blob([byteArray], { type: mimeType });
+
+        // Crear FormData para la API de edición
+        const formData = new FormData();
+        formData.append('image', imageBlob, 'context-image.png');
+        formData.append('prompt', prompt);
+        formData.append('n', '1');
+        formData.append('size', size);
+        formData.append('response_format', 'url');
+        
+        // Solo añadir modelo si es DALL-E 2 (DALL-E 3 no soporta edición)
+        if (model === 'dall-e-2') {
+            formData.append('model', model);
+        }
+
+        return await fetch('https://api.openai.com/v1/images/edits', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`
+                // No incluir Content-Type para FormData, el navegador lo establecerá automáticamente
+            },
+            body: formData
+        });
     }
 
     // Función para descargar imagen
