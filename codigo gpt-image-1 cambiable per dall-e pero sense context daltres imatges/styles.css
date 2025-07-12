@@ -1,0 +1,6 @@
+body { background:#f4f4f5; font-family:Arial,sans-serif; }
+.container { max-width:500px; margin:3rem auto; background:white; padding:2rem; border-radius:8px; }
+textarea, input, select { width:100%; margin:0.5rem 0; padding:0.5rem; border:1px solid #ccc; border-radius:4px; }
+button { padding:0.5rem 1rem; margin-top:1rem; }
+img { max-width:100%; display:block; margin-top:1rem; }
+#error { background:#ffe0e0; padding:0.5rem; border:1px solid #f00; }

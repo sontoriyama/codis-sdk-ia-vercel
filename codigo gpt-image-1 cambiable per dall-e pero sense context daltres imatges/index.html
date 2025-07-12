@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Generador de Imágenes AI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Generador de Imágenes AI</h1>
+    <input id="apiKey" type="text" placeholder="API Key OpenAI (sk-...)" />
+    
+    <textarea id="prompt" placeholder="Descripción (mínimo 10 caracteres)"></textarea>
+    
+    <div>
+      <label>Modelo:</label>
+      <select id="model">
+        <option value="gpt-image-1">GPT-Image-1</option>
+        <option value="dall-e-2">DALL·E 2</option>
+        <option value="dall-e-3">DALL·E 3</option>
+      </select>
+    </div>
+    
+    <div id="contextSection">
+      <label>Imagen de contexto:</label>
+      <input id="contextImage" type="file" accept="image/*" />
+      <img id="contextImagePreview" alt="Context preview" style="display:none;" />
+      <button id="removeContextBtn" style="display:none;">Eliminar imagen</button>
+    </div>
+    
+    <button id="generateBtn"><span class="btn-text">🚀 Generar Imagen</span> <span class="loading" style="display:none;">⏳</span></button>
+    
+    <div id="error" style="display:none;"><p id="errorMessage"></p></div>
+    <div id="result" style="display:none;">
+      <img id="generatedImage" alt="Resultado" />
+      <button id="downloadBtn">Descargar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

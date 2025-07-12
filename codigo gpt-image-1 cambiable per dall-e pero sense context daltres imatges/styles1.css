@@ -1,0 +1,94 @@
+body {
+  background: #f0f4f8;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 2rem;
+}
+
+.container {
+  max-width: 640px;
+  margin: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+input, textarea, select, button {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+#contextImagePreview {
+  display: block;
+  max-width: 100%;
+  margin: 0.5rem 0;
+  border-radius: 8px;
+  border: 1px dashed #aaa;
+}
+
+#removeContextBtn {
+  background: #dc3545;
+}
+
+#removeContextBtn:hover {
+  background: #b02a37;
+}
+
+.loading {
+  display: none;
+  font-weight: bold;
+}
+
+#error {
+  display: none;
+  background: #fdecea;
+  color: #b00020;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+#result {
+  display: none;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+#generatedImage {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generador de Imágenes AI</title>
+  <link rel="stylesheet" href="styles1.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Generador de Imágenes AI</h1>
+    <input id="apiKey" type="text" placeholder="🔑 API Key (sk-...)" />
+
+    <textarea id="prompt" placeholder="📝 Describe lo que deseas generar..."></textarea>
+
+    <div class="context-wrapper">
+      <label for="contextImage">📎 Imagen de contexto:</label>
+      <input type="file" id="contextImage" accept="image/*" />
+      <img id="contextImagePreview" style="display:none;" />
+      <button id="removeContextBtn" style="display:none;">❌ Quitar Imagen</button>
+    </div>
+
+    <label for="model">🤖 Modelo:</label>
+    <select id="model">
+      <option value="gpt-image-1">GPT-Image-1 (gpt-4o)</option>
+      <option value="dall-e-2">DALL·E 2</option>
+      <option value="dall-e-3">DALL·E 3</option>
+    </select>
+
+    <button id="generateBtn">
+      <span class="btn-text">🚀 Generar Imagen</span>
+      <span class="loading">⏳ Generando...</span>
+    </button>
+
+    <div id="error" class="error"><p id="errorMessage"></p></div>
+
+    <div id="result">
+      <img id="generatedImage" alt="Resultado" />
+      <button id="downloadBtn">⬇️ Descargar</button>
+    </div>
+  </div>
+
+  <script src="script1.js"></script>
+</body>
+</html>
